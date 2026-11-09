@@ -1,0 +1,62 @@
+
+<footer class="bg-[#061A1E] text-white">
+  <!-- Footer Content -->
+  <div class="mx-auto grid max-w-7xl grid-cols-3 gap-16 px-8 py-12">
+
+    <!-- Company Information -->
+    <div class="flex flex-col gap-5">
+      <h2 class="font-serif text-2xl">RB Services</h2>
+
+      <div class="flex items-center gap-3 text-sm">
+        <p>PO Box 8411 Gray, TN 37615</p>
+      </div>
+
+      <div class="flex items-center gap-3 text-sm">
+        <a href="tel:+14237658178">+1 (423) 765-8178</a>
+      </div>
+
+      <div class="flex items-center gap-3 text-sm">
+        <a href="mailto:rbpropertymgmt@outlook.com">
+          rbpropertymgmt@outlook.com
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="flex flex-col items-start gap-4">
+      <h3 class="text-[10px] font-bold">QUICK LINKS</h3>
+
+      <a href="#contact" class="text-sm transition-colors hover:text-[#EF8C10]">Contact</a>
+      <a href="#about" class="text-sm transition-colors hover:text-[#EF8C10]">About</a>
+      <a href="#portfolio" class="text-sm transition-colors hover:text-[#EF8C10]">Our Portfolio</a>
+    </div>
+
+    <!-- Socials -->
+    <div class="flex flex-col items-start gap-5">
+      <h3 class="text-[10px] font-bold">SOCIALS</h3>
+
+      <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-sm transition-colors hover:text-[#EF8C10]"
+      >
+        Instagram
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  @media (max-width: 640px) {
+    footer > div {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 20px;
+    }
+
+    footer > div > div:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

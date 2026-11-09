@@ -1,0 +1,70 @@
+---
+import ImageCard from "./ImageCard.astro";
+import StatsCards from "./StatsCards.astro";
+import SecondaryButton from "../SecondaryButton.astro";
+---
+
+<section id="about" class="bg-brand-teal  text-brand-cream" >
+  <div class="page-padding">
+    <div class="container-large section-padding-medium relative">
+            <img src="/assets/who-are-we/shape-1.svg"
+    alt=""
+    class="absolute -left-20 top-150 w-75 z-0"/>
+
+    <img
+    src="/assets/who-are-we/shape-2.svg"
+    alt=""
+    class="hidden sm:absolute sm:-left-30 sm:top-145 sm:w-75 sm:z-0"
+  />
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_3.25fr] relative">
+        <div class="flex flex-col  items-start self-start gap-3 pt-4 pb-4 pl-4 pr-4 lg:sticky top-30 bg-brand-teal">
+          <p class="caps">Who Are You</p>
+          <SecondaryButton />
+        </div>
+        <div class="flex flex-col gap-14">
+          <h2 class=" text-5xl font-normal leading-[1.15]">
+            World-class remodeling & custom spaces in Gray, Tennessee. Currently
+            booking for mid-2027.
+          </h2>
+          <p class=" max-w-[90ch] text-sm leading-relaxed -mt-4">
+            World-class remodeling & custom spaces in Gray, Tennessee. Currently
+            booking for mid-2027. Whether you're planning a full home
+            transformation, expanding your living space, or creating a
+            one-of-a-kind custom project, our team brings decades of experience
+            and craftsmanship to every detail. We work closely with each client
+            to deliver spaces that feel timeless, functional, and built to last.
+          </p>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 md:gap-6">
+            <div class=" lg:pt-24 pt-0">
+             <ImageCard
+              image="/assets/who-are-we/bathroom.jpg"
+              description="Bathroom Woww what an amazing"
+            />       
+            </div>
+            
+            <ImageCard
+              image="/assets/who-are-we/living.jpg"
+              description="living Woww what an amazing"
+            />
+            <div class="lg:pt-24 pt-0">
+            <ImageCard
+              image="/assets/who-are-we/outside.jpg"
+              description="outside Woww what an amazing"
+            />
+            </div>
+            
+            <ImageCard
+              image="/assets/who-are-we/porch.jpg"
+              description="porchh Woww what an amazing"
+            />
+          </div>
+          <div class="grid  grid-cols-1 md:grid-cols-3 gap-3">
+            <StatsCards stat="52+" description="months" />
+            <StatsCards stat="52+" description="months" />
+            <StatsCards stat="52+" description="months" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

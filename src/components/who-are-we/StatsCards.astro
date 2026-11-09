@@ -1,0 +1,46 @@
+---
+interface Props {
+ stat: string
+ description: string   
+}
+    
+
+const {stat, description} =Astro.props
+
+---
+<div>
+    <div class="stat-card"> <div><p class="stat">{stat}</p> <p class="stat-card_description">{description}</p></div>
+    </div>
+</div>
+
+
+<style>
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* content is vertically centered in the card */
+    align-items: flex-start;   /* left aligned */
+    gap: 0.75rem;
+    padding: 2rem;
+    min-height: 249px;
+    background-color: #0E3940;
+  }
+
+  .stat {
+    margin: 0;
+    font-weight: 300;
+    font-size: 4.5rem;
+    line-height: 1;
+    color: #f4f7dc;            /* warm cream */
+  }
+
+  .stat-card_description {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+</style>

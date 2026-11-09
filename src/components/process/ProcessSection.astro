@@ -1,0 +1,83 @@
+---
+const steps = [
+  {
+    number: "01",
+    title: "Join the waitlist",
+    color: "bg-[#59683C]",
+  },
+  {
+    number: "02",
+    title: "Project Review",
+    color: "bg-[#F18A00]",
+  },
+  {
+    number: "03",
+    title: "Design & Build",
+    color: "bg-[#A74737]",
+  },
+];
+
+const description =
+  "High-end remodeling & custom spaces in Gray, Tennessee. Currently booking by waitlist only.";
+---
+
+<section class="bg-[#082B30] px-8 py-12 md:px-16 md:py-16">
+
+  <div class="mx-auto max-w-7xl">
+
+    <!-- Section Header -->
+    <div class="mb-8 flex items-end justify-between gap-6">
+
+      <div class="space-y-2">
+        <p class="text-[11px] uppercase tracking-[0.12em] text-white/80">
+          Our Process
+        </p>
+
+        <h2 class="font-serif text-4xl text-white md:text-5xl">
+          How we get there
+        </h2>
+      </div>
+
+      <a
+        href="#waitlist"
+        class="mb-1 bg-[#59683C] px-3 py-2 text-[9px] text-white transition-colors hover:bg-[#71834D]"
+      >
+        Join the Waitlist
+      </a>
+
+    </div>
+
+    <!-- Process Cards -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+
+      {steps.map((step) => (
+        <div class="bg-[#103B40] px-6 py-6">
+
+          <!-- Number and Title -->
+          <div class="mb-4 flex items-center gap-3">
+
+            <span
+              class={`flex h-7.75 w-7.75 shrink-0 items-center justify-center rounded-full font-serif text-base text-white ${step.color}`}
+            >
+              {step.number}
+            </span>
+
+            <h3 class="font-serif text-xl text-white">
+              {step.title}
+            </h3>
+
+          </div>
+
+          <!-- Description -->
+          <p class="max-w-57.5 text-[10px] leading-normal text-white/90">
+            {description}
+          </p>
+
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+
+</section>

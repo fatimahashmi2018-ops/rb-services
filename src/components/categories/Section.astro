@@ -1,0 +1,68 @@
+---
+import Card  from "./Card.astro";
+import {sanityClient} from "sanity:client";
+const categories = await sanityClient.fetch(`
+  *[_type == "category"] {
+    _id,
+    title,
+    href,
+    "imageUrl": image.asset->url,
+    "shapeUrl": shape.asset->url
+  }
+`);
+---
+<section class="bg-brand-cream py-3 sm:py-4">
+  <div class="page-padding">
+    <div class="container-large">
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-3">
+
+        {categories.map((category)=>(
+          <Card
+          title={category.title}
+          image={category.imageUrl}
+          href={category.href}
+          shape={category.shapeUrl} />
+        )
+
+        )
+        }
+
+        <!-- <Card
+          title="Kitchens"
+          image="/assets/who-are-we/living.jpg"
+          shape="/assets/categories/6a22c6ac6a136e9355339af8_Kitchen.svg"
+          href="#kitchens"
+        />
+
+        <Card
+          title="Bathrooms"
+          image="/assets/who-are-we/bathroom.jpg"
+          shape="/assets/categories/6a22c6bb5f85c979693bd9bc_Remodels.svg"
+          href="#bathrooms"
+        />
+
+        <Card
+          title="Additions"
+          image="/assets/dining.webp"
+          shape="/assets/categories/6a22c6ccd858caaf337c72f4_outdoors.svg"
+          href="#additions"
+        />
+
+        <Card
+          title="Remodels"
+          image="/assets/who-are-we/porch.jpg"
+          shape="/assets/categories/6a22c6ee82dbfdd243037389_bathrooms-1.svg"
+          href="#remodels"
+        />
+
+        <Card
+          title="Outdoors"
+          image="/assets/who-are-we/outside.jpg"
+          shape="/assets/categories/6a22c6ccd858caaf337c72f4_outdoors.svg"
+          href="#outdoors"
+        /> -->
+
+      </div>
+    </div>
+  </div>
+</section>

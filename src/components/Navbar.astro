@@ -1,0 +1,108 @@
+---
+const navLinks= [
+  {href:"/contact",label:"Contact"},
+  {href:"/#about", label:"About"},
+  {href:"/#portfolio", label:"Portfolio"},
+];
+---
+<header class=" w-full bg-brand-cream text-brand-olive border-b border-brand-teal/10 sticky top-0 z-50">
+  <div class="page-padding">
+    <div class="container-large">
+      <div class="h-24 flex items-center justify-between">
+        <a 
+        href="/"
+        class="font-display text-4xl
+        hover:opacity-80 transition-opacity 
+        focus-visible:outline-2
+        focus-visible: outline-brand-orange
+        focus-visible: outline-offset-4"
+        aria-label="RB Services Home"
+        >
+          RB Services
+        </a>
+        <!-- Menu button -->
+         <button
+         id="menu-toggle"
+         type="button"
+         class="sm:hidden"
+         aria-label="Open navigation button"
+         aria-expanded="false"
+         aria-controls="main-navigation"
+
+         >
+          <svg
+        id="menu-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+         </button>
+        <!-- desktop Navigation -->
+         <nav
+         id="main-navigation"
+         class="absolute left-0 right-0 top-full hidden flex-col gap-4 bg-brand-cream px-6 py-2
+         sm:static sm:flex sm:flex-row sm:items-center sm:gap-8 sm:bg-transparent sm:p-0"
+         >
+          <ul class="flex flex-col gap-3.5 sm:flex-row sm:gap-5 items-center text-xs font-semibold
+          tracking-widest list-none m-0 p-0"
+          >
+            {navLinks.map(({href, label})=><li>
+              <a
+              href={href}
+              class= "relative py-2
+                      sm:after:absolute sm:after:bottom-1 sm:after:left-0 
+                      sm:after:w-full sm:after:h-[1.5px]
+                      sm:after:bg-brand-orange sm:after:scale-x-0
+                      sm:hover:after:scale-x-100
+                      sm:after:transition-transform sm:after:duration-200
+                      sm:focus-visible:outline-2
+                      focus-visible:outline-brand-orange 
+                      focus-visible:: outline-offset-4"    
+                    >
+                {label}
+              </a>
+            </li>)}
+          </ul>
+         </nav>
+         <!-- Call to action button -->
+          <div class="hidden md:block">
+            <a
+            href="/contact"
+            class="inline-flex items-center justify-center bg-white hover:bg-brand-teal text-brand-teal hover:text-white border border-brand-teal text-sm font-medium px-5 py-2.5 rounded shadow-xs transition-colors duration-200
+               focus-visible:outline-2
+               focus-visible:outline-brand-orange
+               focus-visible:outline-offset-2"
+            >
+              Join The Waitlist
+            </a>
+
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+</header>
+<script>
+  const menuToggle = document.querySelector("#menu-toggle");
+  const navigation = document.querySelector('#main-navigation');
+  menuToggle?.addEventListener("click", ()=>{
+    const isExpanded = 
+    menuToggle.getAttribute("aria-expanded") === "true";
+    menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+    menuToggle.setAttribute("aria-label", isExpanded? "Open navigation menu":"Close navigation menu");
+    navigation?.classList.toggle("hidden");
+    navigation?.classList.toggle("flex")
+
+
+  })
+</script>

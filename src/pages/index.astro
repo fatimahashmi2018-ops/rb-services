@@ -1,0 +1,276 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BaseLayouts from '../layouts/BaseLayouts.astro';
+import WhoAreYou  from '../components/who-are-we/WhoAreYou.astro';
+import Section  from '../components/categories/Section.astro';
+import PortfolioGrid from '../components/explore/PortfolioGrid.astro';
+import ProcessSection from '../components/process/ProcessSection.astro'
+// Keep your existing BaseLayouts import.
+
+
+
+// Replace each undefined with its imported image name.
+const photos: {
+  position: string;
+  src: ImageMetadata | undefined;
+  alt: string;
+}[] = [
+  { position: 'bathroom', src: undefined, alt: 'Remodeled bathroom' },
+  { position: 'porch', src: undefined, alt: 'Covered front porch' },
+  { position: 'kitchen', src: undefined, alt: 'Custom kitchen' },
+  { position: 'dining', src: undefined, alt: 'Dining room with custom finishes' },
+  { position: 'exterior', src: undefined, alt: 'Stone exterior and covered patio' },
+];
+
+// Replace undefined with photoFrame.src after importing your SVG.
+const frameSrc: string | undefined = undefined;
+---
+
+<BaseLayouts
+  title="Home | RB Services"
+  description="High-end remodeling and custom spaces in Gray, Tennessee."
+>
+  <!-- Your existing navbar stays above this section. -->
+  <section class="home-hero" aria-labelledby="hero-title">
+    <div class="hero-inner container-large">
+      <h1 id="hero-title" class="hero-title">
+        Designed for those<br class="desktop-break" /> with big dreams
+      </h1>
+
+      <div class="hero-copy">
+        <p>
+          High-end remodeling &amp; custom spaces in Gray, Tennessee.
+          Currently booking by waitlist only.
+        </p>
+        <!-- Change this to your existing waitlist page or form ID. -->
+        <a class="waitlist-link" href="#waitlist">Join the Waitlist</a>
+      </div>
+
+      {photos.map((photo) => (
+        <div class:list={['hero-photo', `hero-photo--${photo.position}`]}>
+          {frameSrc && (
+            <img
+              class="photo-frame"
+              src={frameSrc}
+              alt=""
+              aria-hidden="true"
+              width="400"
+              height="300"
+            />
+          )}
+          <div class="photo-window">
+            {photo.src && (
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                widths={[240, 480, 720]}
+                sizes="(max-width: 600px) 45vw, 240px"
+                loading="eager"
+              />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+  <WhoAreYou />
+  <PortfolioGrid/>
+  <ProcessSection/>
+  <Section />
+</BaseLayouts>
+
+<style>
+  .home-hero {
+    background: var(--color-brand-cream);
+    color: var(--color-brand-teal);
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    position: relative;
+    min-height: 44rem;
+    isolation: isolate;
+  }
+
+  .hero-title {
+    position: relative;
+    z-index: 2;
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: 10rem 1.5rem 0;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: 0;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    width: 15rem;
+    margin-top: 3rem;
+    margin-left: calc(50% + 2rem);
+    padding-bottom: 4rem;
+    font-family: var(--font-body);
+  }
+
+  .hero-copy p {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .waitlist-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    background: var(--color-brand-teal);
+    color: var(--color-brand-cream);
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: background-color 160ms ease;
+  }
+
+  .waitlist-link:hover {
+    background: var(--color-brand-olive);
+  }
+
+  .waitlist-link:focus-visible {
+    outline: 3px solid var(--color-brand-rust);
+    outline-offset: 4px;
+  }
+
+  .hero-photo {
+    position: absolute;
+    z-index: 1;
+    width: 15rem;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Colored backing stays visible until you add your SVG frame. */
+  .hero-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0.75rem 0 0 0;
+    background: var(--color-brand-orange);
+    border-left: 0.65rem solid var(--color-brand-olive);
+    border-bottom: 0.65rem solid var(--color-brand-rust);
+  }
+
+  .hero-photo:has(.photo-frame)::before {
+    display: none;
+  }
+
+  .photo-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+
+  .photo-window {
+    position: absolute;
+    inset: 0 0 0.75rem 0.65rem;
+    overflow: hidden;
+  }
+
+  .photo-window img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-photo--bathroom {
+    top: -3rem;
+    left: 1rem;
+    width: 19rem;
+  }
+
+  .hero-photo--porch {
+    top: -2rem;
+    right: 1.5rem;
+  }
+
+  .hero-photo--kitchen {
+    top: 17rem;
+    left: -2rem;
+    width: 14rem;
+  }
+
+  .hero-photo--dining {
+    top: 28rem;
+    right: calc(50% + 1rem);
+    width: 17rem;
+  }
+
+  .hero-photo--exterior {
+    top: 30rem;
+    right: -2rem;
+    width: 16rem;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-title {
+      max-width: 43rem;
+      font-size: 4rem;
+    }
+
+    .hero-photo--bathroom { width: 15rem; }
+    .hero-photo--porch { width: 13rem; }
+    .hero-photo--kitchen { width: 11rem; }
+    .hero-photo--dining { top: 26rem; width: 14rem; }
+    .hero-photo--exterior { width: 12rem; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-inner {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .hero-title {
+      grid-column: 1 / -1;
+      padding: 1rem 0 0;
+      font-size: 2.75rem;
+    }
+
+    .desktop-break { display: none; }
+
+    .hero-copy {
+      grid-column: 1 / -1;
+      width: auto;
+      max-width: 22rem;
+      margin: 0 auto 1rem;
+      padding: 0;
+      text-align: center;
+    }
+
+    .hero-photo {
+      position: relative;
+      inset: auto;
+      width: 100%;
+    }
+
+    .hero-photo--dining {
+      grid-column: 1 / -1;
+      width: 70%;
+      justify-self: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .waitlist-link { transition: none; }
+  }
+</style>
+

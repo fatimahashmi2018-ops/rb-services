@@ -1,0 +1,41 @@
+---
+interface Props {
+    title:string;
+    image:string;
+    shape:string;
+    href:string;
+
+}
+const{title,image,shape,href} = Astro.props
+
+--- 
+<div
+ class="relative flex aspect-4/5 w-full flex-col overflow-hidden"
+>
+  <!-- Background image -->
+  <img
+    src={image}
+    alt={title}
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="lazy"
+  />
+
+  <!-- SVG wrapper: stays at the bottom using flex -->
+  <div class="relative flex  items-center justify-center mt-auto py-6 md:py-8">
+    <img
+      src={shape}
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+
+    <!-- Category label -->
+    <a
+     href={href}
+    aria-label={`${title} remodeling`}
+      class="relative z-10 bg-white/5 hover:bg-brand-orange transition-bg-color duration-200 px-3 py-2 text-xs font-semibold text-white"
+    >
+      {title} ↓
+  </a>
+  </div>
+</div>

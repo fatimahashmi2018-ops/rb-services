@@ -1,0 +1,67 @@
+@import "tailwindcss";
+/*it's basically design tokens not used yet ccan add fints breakppoints and stuff This gives you bg-brand-teal, text-brand-teal, border-brand-teal */
+@theme {
+    /* Colors */
+ --color-brand-cream: #fcebd5;
+ --color-brand-teal: #07383d;
+ --color-brand-orange: #ff8a00;
+ --color-brand-olive: #59602f;
+ --color-brand-rust: #b94f35;
+
+ /* fonts */
+
+ --font-display: "Hedvig Letters Serif", Georgia, serif;
+  --font-body: "Proza Libre", Arial, sans-serif;
+
+}
+
+ /* layout Utilities */
+
+ @utility page-padding {
+    padding-inline: 2.5rem;
+ }
+
+ /* Containers */
+ @utility container-large{
+    width:100%;
+    max-width:80rem;
+    margin-inline:auto;
+
+ }
+ @utility container-medium {
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+@utility container-small {
+  width: 100%;
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+
+/* Section spacing */
+
+@utility section-padding-large {
+  padding-block: 8rem;
+}
+
+@utility section-padding-medium {
+  padding-block: 6rem;
+}
+
+@utility section-padding-small {
+  padding-block: 4rem;
+}
+
+@layer base {
+    body{
+        font-family: var(--font-body);
+
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        font-family: var(--font-display);
+    }
+}

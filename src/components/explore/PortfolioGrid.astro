@@ -1,0 +1,167 @@
+---
+import { sanityClient } from "sanity:client";
+
+interface Project {
+  _id: string;
+  title: string | null;
+  imageUrl: string;
+  width?: number;
+  height?: number;
+  categoryId?: string;
+  categoryTitle?: string;
+}
+
+// One query instead of two. Only projects that actually have an image.
+const projects: Project[] = await sanityClient.fetch(`
+  *[_type == "project" && defined(image.asset)] | order(_createdAt desc) {
+    _id,
+    title,
+    "imageUrl": image.asset->url,
+    "width": image.asset->metadata.dimensions.width,
+    "height": image.asset->metadata.dimensions.height,
+    "categoryId": category->_id,
+    "categoryTitle": category->title
+  }
+`);
+
+// Derive filter buttons from the projects themselves (no empty categories,
+// no second network request).
+const categories = [
+  ...new Map(
+    projects
+      .filter((p) => p.categoryId && p.categoryTitle)
+      .map((p) => [p.categoryId!, { id: p.categoryId!, title: p.categoryTitle! }])
+  ).values(),
+];
+
+// Ask Sanity's CDN for a right-sized, modern-format image.
+const optimize = (url: string, width: number) =>
+  `${url}?w=${width}&auto=format&q=80`;
+---
+
+<section id="portfolio" class="bg-brand-cream py-3 sm:py-4">
+  <div class="page-padding section-padding-medium">
+    <div class="container-large">
+      <!-- Category filters -->
+      <div
+        class="mb-8 flex flex-wrap gap-6"
+        role="group"
+        aria-label="Filter projects by category"
+      >
+        <button
+          type="button"
+          class="category-filter"
+          data-category="all"
+          aria-pressed="true"
+        >
+          All
+        </button>
+
+        {
+          categories.map((category) => (
+            <button
+              type="button"
+              class="category-filter"
+              data-category={category.id}
+              aria-pressed="false"
+            >
+              {category.title}
+            </button>
+          ))
+        }
+      </div>
+
+      <!-- Projects gallery -->
+      <div class="columns-1 gap-3 sm:columns-2 lg:columns-3" id="project-grid">
+        {
+          projects.map((project, i) => (
+            <div
+              class="project-item mb-3 break-inside-avoid"
+              data-category={project.categoryId ?? ""}
+            >
+              <img
+                src={optimize(project.imageUrl, 800)}
+                srcset={`${optimize(project.imageUrl, 480)} 480w, ${optimize(project.imageUrl, 800)} 800w, ${optimize(project.imageUrl, 1200)} 1200w`}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                width={project.width}
+                height={project.height}
+                alt={project.title ?? ""}
+                loading={i < 3 ? "eager" : "lazy"}
+                decoding="async"
+                class="block h-auto w-full"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initPortfolioFilter() {
+    const grid = document.getElementById("project-grid");
+    const filterGroup = document.querySelector<HTMLElement>(
+      '[aria-label="Filter projects by category"]'
+    );
+    if (!grid || !filterGroup) return;
+
+    const buttons = Array.from(
+      filterGroup.querySelectorAll<HTMLButtonElement>(".category-filter")
+    );
+    const items = Array.from(
+      grid.querySelectorAll<HTMLElement>(".project-item")
+    );
+
+    // Single delegated listener instead of one per button.
+    filterGroup.addEventListener("click", (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
+        ".category-filter"
+      );
+      if (!button) return;
+
+      const selected = button.dataset.category;
+
+      for (const btn of buttons) {
+        btn.setAttribute("aria-pressed", String(btn === button));
+      }
+
+      for (const item of items) {
+        item.hidden = !(selected === "all" || item.dataset.category === selected);
+      }
+    });
+  }
+
+  initPortfolioFilter();
+  // Re-run if you use Astro's <ClientRouter /> view transitions:
+  // document.addEventListener("astro:page-load", initPortfolioFilter);
+</script>
+
+<style>
+  .category-filter {
+    padding: 0.625rem 0.6875rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: #f7ede0;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .category-filter[aria-pressed="true"] {
+    background: #2f4a2f;
+    color: #fff;
+  }
+
+  .category-filter:focus-visible {
+    outline: 2px solid #2f4a2f;
+    outline-offset: 2px;
+  }
+
+  .project-item[hidden] {
+    display: none;
+  }
+</style>
